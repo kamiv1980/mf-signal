@@ -3,7 +3,7 @@ import { webSocket } from "rxjs/webSocket";
 import {map, retry} from "rxjs/operators";
 import {timer} from "rxjs";
 
-const SOCKET_URL = "ws://localhost:4000";
+const SOCKET_URL = "ws://localhost:4000"; //TODO change to PROD
 
 const CryptoPrices: React.FC = () => {
     const [prices, setPrices] = useState<Record<string, number>>({
@@ -15,7 +15,7 @@ const CryptoPrices: React.FC = () => {
     useEffect(() => {
         const wsCrypto = webSocket(SOCKET_URL).pipe(
             retry({
-                delay: (error, retryCount) => {
+                delay: (retryCount) => {
                     console.log(`Retry attempt #${retryCount}`);
                     return timer(5000);
                 }
